@@ -1,63 +1,103 @@
-function calculateEMI(p, r, n) {
-    let rate = r / 12 / 100;
-    let months = n * 12;
-
-    return (p * rate * Math.pow(1 + rate, months)) /
-           (Math.pow(1 + rate, months) - 1);
+function showTab(tab) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(tab).classList.add("active");
 }
 
+// EMI calculation
+function emi(p, r, n) {
+  let i = r / 12 / 100;
+  let m = n * 12;
+
+  return (p * i * Math.pow(1 + i, m)) /
+         (Math.pow(1 + i, m) - 1);
+}
+
+// MAIN CALCULATOR
 function calculate() {
-    let salary = Number(document.getElementById("salary").value);
-    let otherIncome = Number(document.getElementById("otherIncome").value);
-    let existingEmi = Number(document.getElementById("existingEmi").value);
-    let savings = Number(document.getElementById("savings").value);
+  let salary = Number(document.getElementById("salary").value);
+  let expenses = Number(document.getElementById("expenses").value);
+  let carPrice = Number(document.getElementById("carPrice").value);
+  let rate = Number(document.getElementById("rate").value);
+  let years = Number(document.getElementById("years").value);
 
-    let carPrice = Number(document.getElementById("carPrice").value);
-    let downPayment = Number(document.getElementById("downPayment").value);
-    let insurance = Number(document.getElementById("insurance").value);
-    let tax = Number(document.getElementById("tax").value);
+  let income = salary;
+  let budget = salary - expenses;
 
-    let rate = Number(document.getElementById("rate").value);
-    let years = Number(document.getElementById("years").value);
-    let fee = Number(document.getElementById("processingFee").value);
+  let loan = carPrice * 0.8;
+  let monthlyEMI = emi(loan, rate, years);
 
-    let income = salary + otherIncome;
+  let ai = aiRecommend(income, monthlyEMI);
 
-    // 🚗 cost breakdown
-    let dpAmount = carPrice * (downPayment / 100);
-    let loanAmount = carPrice - dpAmount;
+  // Dashboard update
+  document.getElementById("incomeCard").innerText = "₹" + income;
+  document.getElementById("emiCard").innerText = "₹" + monthlyEMI.toFixed(0);
+  document.getElementById("budgetCard").innerText = "₹" + (budget - monthlyEMI).toFixed(0);
 
-    let insuranceAmt = carPrice * (insurance / 100);
-    let taxAmt = carPrice * (tax / 100);
-    let processingAmt = loanAmount * (fee / 100);
+  document.getElementById("result").innerHTML = `
+    💰 Income: ₹${income}<br>
+    🏦 Loan: ₹${loan}<br>
+    📉 EMI: ₹${monthlyEMI.toFixed(0)}<br>
+    💵 Budget Left: ₹${(budget - monthlyEMI).toFixed(0)}
+  `;
 
-    let emi = calculateEMI(loanAmount, rate, years);
+  document.getElementById("aiResult").innerHTML = `
+    <h3>🤖 AI Suggestion</h3>
+    ${ai}
+  `;
+}
 
-    let totalMonthlyObligation = emi + existingEmi;
-    let ratio = (totalMonthlyObligation / income) * 100;
+// AI recommendation engine
+function aiRecommend(income, emi) {
+  let ratio = emi / income;
 
-    // 📊 Risk Level
-    let status = "";
-    if (ratio < 25) status = "🟢 SAFE";
-    else if (ratio < 40) status = "🟡 MODERATE";
-    else status = "🔴 RISKY";
+  if (ratio < 0.2) return "⚡ EV Recommended";
+  if (ratio < 0.3) return "🚙 Sedan Recommended";
+  if (ratio < 0.4) return "🚗 Hatchback Recommended";
+  return "⚠ Not Recommended to Buy Car Now";
+}
 
-    document.getElementById("result").innerHTML = `
-        <h2>📊 Results</h2>
+// CHATBOT AI
+function sendMessage() {
+  let input = document.getElementById("userInput").value;
+  let chatBox = document.getElementById("chatBox");
 
-        💰 Monthly Income: ₹${income}<br>
-        🚗 Car Price: ₹${carPrice}<br>
-        💵 Down Payment: ₹${dpAmount}<br>
-        🏦 Loan Amount: ₹${loanAmount}<br>
-        📊 EMI: ₹${emi.toFixed(0)}<br>
+  if (!input) return;
 
-        🧾 Insurance: ₹${insuranceAmt}<br>
-        🧾 Road Tax: ₹${taxAmt}<br>
-        💳 Processing Fee: ₹${processingAmt}<br>
+  chatBox.innerHTML += `<div class="user">🧑 ${input}</div>`;
 
-        📉 Total EMI Burden: ₹${totalMonthlyObligation.toFixed(0)}<br>
-        ⚠ EMI-to-Income Ratio: ${ratio.toFixed(1)}%<br>
+  let response = getBotResponse(input.toLowerCase());
 
-        <h3>Status: ${status}</h3>
-    `;
+  chatBox.innerHTML += `<div class="bot">🤖 ${response}</div>`;
+
+  document.getElementById("userInput").value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// CHATBOT LOGIC
+function getBotResponse(msg) {
+
+  let num = msg.match(/\d+/);
+  let salary = num ? Number(num[0]) : 0;
+
+  if (msg.includes("can i afford")) {
+    if (salary < 30000) return "🚗 Hatchback recommended";
+    if (salary < 70000) return "🚙 Sedan recommended";
+    return "⚡ SUV or EV recommended";
+  }
+
+  if (msg.includes("best car")) {
+    return "🚗 Hatchback | 🚙 Sedan | ⚡ EV based on budget";
+  }
+
+  if (msg.includes("emi")) {
+    return "⚠ Keep EMI under 30% of income";
+  }
+
+  if (salary > 0) {
+    return salary < 50000
+      ? "🚗 Safe: Hatchback"
+      : "🚙 You can consider Sedan or SUV";
+  }
+
+  return "🤖 Ask: 'Can I afford a car with 50k salary?'";
 }
