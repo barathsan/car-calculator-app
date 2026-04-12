@@ -1,31 +1,32 @@
 body {
     font-family: Arial;
-    background: linear-gradient(120deg, #141e30, #243b55);
+    background: #0f172a;
     color: white;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    padding: 30px;
 }
 
 .container {
-    background: rgba(255,255,255,0.08);
-    padding: 25px;
+    width: 400px;
+    background: #1e293b;
+    padding: 20px;
     border-radius: 15px;
-    width: 360px;
 }
 
 input {
     width: 100%;
     padding: 8px;
-    margin: 8px 0;
+    margin: 6px 0;
+    border-radius: 5px;
+    border: none;
 }
 
 button {
     width: 100%;
     padding: 10px;
-    background: #00c6ff;
+    background: #22c55e;
     border: none;
+    margin-top: 10px;
     font-weight: bold;
-    cursor: pointer;
 }
