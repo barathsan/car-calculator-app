@@ -1,5 +1,8 @@
 function showTab(tab) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.remove("active");
+  });
+
   document.getElementById(tab).classList.add("active");
 }
 
@@ -28,35 +31,32 @@ function calculate() {
 
   let ai = aiRecommend(income, monthlyEMI);
 
-  // Dashboard update
   document.getElementById("incomeCard").innerText = "₹" + income;
   document.getElementById("emiCard").innerText = "₹" + monthlyEMI.toFixed(0);
-  document.getElementById("budgetCard").innerText = "₹" + (budget - monthlyEMI).toFixed(0);
+  document.getElementById("budgetCard").innerText =
+    "₹" + (budget - monthlyEMI).toFixed(0);
 
   document.getElementById("result").innerHTML = `
     💰 Income: ₹${income}<br>
     🏦 Loan: ₹${loan}<br>
     📉 EMI: ₹${monthlyEMI.toFixed(0)}<br>
-    💵 Budget Left: ₹${(budget - monthlyEMI).toFixed(0)}
   `;
 
-  document.getElementById("aiResult").innerHTML = `
-    <h3>🤖 AI Suggestion</h3>
-    ${ai}
-  `;
+  document.getElementById("aiResult").innerHTML =
+    "<h3>🤖 AI Suggestion</h3>" + ai;
 }
 
-// AI recommendation engine
+// AI recommendation
 function aiRecommend(income, emi) {
   let ratio = emi / income;
 
   if (ratio < 0.2) return "⚡ EV Recommended";
   if (ratio < 0.3) return "🚙 Sedan Recommended";
   if (ratio < 0.4) return "🚗 Hatchback Recommended";
-  return "⚠ Not Recommended to Buy Car Now";
+  return "⚠ Not Recommended";
 }
 
-// CHATBOT AI
+// CHATBOT (FIXED WORKING)
 function sendMessage() {
   let input = document.getElementById("userInput").value;
   let chatBox = document.getElementById("chatBox");
@@ -73,7 +73,7 @@ function sendMessage() {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// CHATBOT LOGIC
+// BOT LOGIC
 function getBotResponse(msg) {
 
   let num = msg.match(/\d+/);
