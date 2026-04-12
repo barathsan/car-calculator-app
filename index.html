@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Car Finance AI Dashboard</title>
+  <title>Car Finance AI Pro Dashboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="sidebar">
-  <h2>🚗 CarAI</h2>
+  <h2>🚗 CarAI Pro</h2>
 
   <button onclick="showTab('home')">🏠 Dashboard</button>
-  <button onclick="showTab('calc')">💰 Calculator</button>
-  <button onclick="showTab('ai')">🤖 AI Suggestion</button>
+  <button onclick="showTab('calc')">💰 EMI</button>
+  <button onclick="showTab('ai')">🤖 AI</button>
   <button onclick="showTab('chat')">💬 Chatbot</button>
+  <button onclick="showTab('acr')">📊 ACR</button>
+  <button onclick="showTab('maintain')">🔧 Maintenance</button>
+  <button onclick="showTab('payment')">💳 Payment</button>
+  <button onclick="showTab('rto')">🏛️ RTO</button>
 </div>
 
 <div class="main">
@@ -40,7 +44,7 @@
     </div>
   </div>
 
-  <!-- CALCULATOR -->
+  <!-- EMI CALC -->
   <div id="calc" class="page">
     <h1>💰 EMI Calculator</h1>
 
@@ -57,20 +61,84 @@
 
   <!-- AI -->
   <div id="ai" class="page">
-    <h1>🤖 AI Car Recommendation</h1>
+    <h1>🤖 AI Recommendation</h1>
     <div id="aiResult"></div>
   </div>
 
-  <!-- CHATBOT (FIXED) -->
+  <!-- CHATBOT -->
   <div id="chat" class="page">
-
-    <h1>💬 Car Finance Chatbot</h1>
+    <h1>💬 AI Chatbot</h1>
 
     <div id="chatBox" class="chat-box"></div>
 
-    <input id="userInput" placeholder="Ask: Can I afford a car with 50k salary?">
+    <input id="userInput" placeholder="Ask anything about cars...">
     <button onclick="sendMessage()">Send</button>
+  </div>
 
+  <!-- ACR -->
+  <div id="acr" class="page">
+    <h1>📊 Annual Car Running Cost (ACR)</h1>
+
+    <input id="fuel" placeholder="Monthly Fuel Cost">
+    <input id="service" placeholder="Yearly Service Cost">
+    <input id="insurance" placeholder="Yearly Insurance">
+    <input id="other" placeholder="Other Costs">
+
+    <button onclick="calcACR()">Calculate</button>
+
+    <div id="acrResult"></div>
+  </div>
+
+  <!-- MAINTENANCE -->
+  <div id="maintain" class="page">
+    <h1>🔧 Maintenance Cost</h1>
+
+    <input id="tyre" placeholder="Tyre Cost/year">
+    <input id="oil" placeholder="Oil + Service/year">
+    <input id="repair" placeholder="Repair/year">
+
+    <button onclick="calcMaintenance()">Calculate</button>
+
+    <div id="maintResult"></div>
+  </div>
+
+  <!-- PAYMENT -->
+  <div id="payment" class="page">
+    <h1>💳 Payment System</h1>
+
+    <input id="carPrice2" placeholder="Car Price">
+    <input id="ownFund" placeholder="Own %">
+    <input id="loanFund" placeholder="Loan %">
+
+    <select id="paymentMode">
+      <option>Cash</option>
+      <option>Loan (EMI)</option>
+      <option>Credit Card EMI</option>
+    </select>
+
+    <button onclick="calcPayment()">Check</button>
+
+    <div id="payResult"></div>
+  </div>
+
+  <!-- RTO -->
+  <div id="rto" class="page">
+    <h1>🏛️ RTO Calculator (India)</h1>
+
+    <input id="carPrice3" placeholder="Car Price">
+
+    <select id="state">
+      <option value="tn">Tamil Nadu</option>
+      <option value="ka">Karnataka</option>
+      <option value="mh">Maharashtra</option>
+      <option value="dl">Delhi</option>
+      <option value="up">Uttar Pradesh</option>
+      <option value="gj">Gujarat</option>
+    </select>
+
+    <button onclick="calcRTO()">Calculate</button>
+
+    <div id="rtoResult"></div>
   </div>
 
 </div>
