@@ -1,34 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Car Finance Pro</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Car Finance AI Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
-    <h1>🚗 Car Finance Pro Calculator</h1>
+<div class="sidebar">
+  <h2>🚗 CarAI</h2>
 
-    <h3>💰 Income Details</h3>
+  <button onclick="showTab('home')">🏠 Dashboard</button>
+  <button onclick="showTab('calc')">💰 Calculator</button>
+  <button onclick="showTab('ai')">🤖 AI Suggestion</button>
+  <button onclick="showTab('chat')">💬 Chatbot</button>
+</div>
+
+<div class="main">
+
+  <!-- DASHBOARD -->
+  <div id="home" class="page active">
+    <h1>📊 Finance Dashboard</h1>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Income</h3>
+        <p id="incomeCard">₹0</p>
+      </div>
+
+      <div class="card">
+        <h3>EMI</h3>
+        <p id="emiCard">₹0</p>
+      </div>
+
+      <div class="card">
+        <h3>Budget Left</h3>
+        <p id="budgetCard">₹0</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div id="calc" class="page">
+    <h1>💰 EMI Calculator</h1>
+
     <input id="salary" placeholder="Monthly Salary">
-    <input id="otherIncome" placeholder="Other Income">
-    <input id="existingEmi" placeholder="Existing EMIs">
-    <input id="savings" placeholder="Monthly Savings">
-
-    <h3>🚗 Car Details</h3>
+    <input id="expenses" placeholder="Monthly Expenses">
     <input id="carPrice" placeholder="Car Price">
-    <input id="downPayment" placeholder="Down Payment % (e.g. 20)">
-    <input id="insurance" placeholder="Insurance % (e.g. 5)">
-    <input id="tax" placeholder="Road Tax % (e.g. 10)">
-
-    <h3>🏦 Loan Details</h3>
-    <input id="rate" placeholder="Interest Rate %">
-    <input id="years" placeholder="Loan Tenure (Years)">
-    <input id="processingFee" placeholder="Processing Fee %">
+    <input id="rate" placeholder="Interest Rate (%)">
+    <input id="years" placeholder="Loan Years">
 
     <button onclick="calculate()">Calculate</button>
 
     <div id="result"></div>
+  </div>
+
+  <!-- AI -->
+  <div id="ai" class="page">
+    <h1>🤖 AI Car Recommendation</h1>
+    <div id="aiResult"></div>
+  </div>
+
+  <!-- CHATBOT -->
+  <div id="chat" class="page">
+    <h1>💬 Car Finance Chatbot</h1>
+
+    <div id="chatBox" class="chat-box"></div>
+
+    <input id="userInput" placeholder="Ask: Can I afford a 50k salary car?">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
 </div>
 
 <script src="script.js"></script>
