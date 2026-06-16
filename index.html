@@ -1,148 +1,340 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Car Finance AI Pro Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Finance AI Pro Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- Sidebar -->
 <div class="sidebar">
-  <h2>🚗 CarAI Pro</h2>
 
-  <button onclick="showTab('home')">🏠 Dashboard</button>
-  <button onclick="showTab('calc')">💰 EMI</button>
-  <button onclick="showTab('ai')">🤖 AI</button>
-  <button onclick="showTab('chat')">💬 Chatbot</button>
-  <button onclick="showTab('acr')">📊 ACR</button>
-  <button onclick="showTab('maintain')">🔧 Maintenance</button>
-  <button onclick="showTab('payment')">💳 Payment</button>
-  <button onclick="showTab('rto')">🏛️ RTO</button>
+    <h2>🚗 CarAI Pro</h2>
+
+    <button onclick="showTab('home')">🏠 Dashboard</button>
+
+    <button onclick="showTab('calc')">💰 EMI Calculator</button>
+
+    <button onclick="showTab('ai')">🤖 AI Recommendation</button>
+
+    <button onclick="showTab('chat')">💬 AI Chatbot</button>
+
+    <button onclick="showTab('acr')">📊 ACR</button>
+
+    <button onclick="showTab('maintain')">🔧 Maintenance</button>
+
+    <button onclick="showTab('payment')">💳 Payment</button>
+
+    <button onclick="showTab('rto')">🏛️ RTO</button>
+
+    <button onclick="showTab('ownership')">📈 Ownership Cost</button>
+
+    <button onclick="showTab('evcompare')">⚡ EV vs Petrol</button>
+
 </div>
 
+<!-- Main Content -->
 <div class="main">
 
-  <!-- DASHBOARD -->
-  <div id="home" class="page active">
-    <h1>📊 Finance Dashboard</h1>
+<!-- Dashboard -->
+<div id="home" class="page active">
 
-    <div class="cards">
-      <div class="card">
-        <h3>Income</h3>
-        <p id="incomeCard">₹0</p>
-      </div>
+<h1>📊 Car Finance Dashboard</h1>
 
-      <div class="card">
-        <h3>EMI</h3>
-        <p id="emiCard">₹0</p>
-      </div>
+<div class="cards">
 
-      <div class="card">
-        <h3>Budget Left</h3>
-        <p id="budgetCard">₹0</p>
-      </div>
-    </div>
-  </div>
+<div class="card">
+<h3>Monthly Income</h3>
+<p id="incomeCard">₹0</p>
+</div>
 
-  <!-- EMI CALC -->
-  <div id="calc" class="page">
-    <h1>💰 EMI Calculator</h1>
+<div class="card">
+<h3>Monthly EMI</h3>
+<p id="emiCard">₹0</p>
+</div>
 
-    <input id="salary" placeholder="Monthly Salary">
-    <input id="expenses" placeholder="Monthly Expenses">
-    <input id="carPrice" placeholder="Car Price">
-    <input id="rate" placeholder="Interest Rate (%)">
-    <input id="years" placeholder="Loan Years">
+<div class="card">
+<h3>Budget Left</h3>
+<p id="budgetCard">₹0</p>
+</div>
 
-    <button onclick="calculate()">Calculate</button>
+<div class="card">
+<h3>Recommended Vehicle</h3>
+<p id="carType">--</p>
+</div>
 
-    <div id="result"></div>
-  </div>
+<div class="card">
+<h3>Affordability Score</h3>
+<p id="scoreCard">0/100</p>
+</div>
 
-  <!-- AI -->
-  <div id="ai" class="page">
-    <h1>🤖 AI Recommendation</h1>
-    <div id="aiResult"></div>
-  </div>
+<div class="card">
+<h3>Estimated RTO</h3>
+<p id="rtoCard">₹0</p>
+</div>
 
-  <!-- CHATBOT -->
-  <div id="chat" class="page">
-    <h1>💬 AI Chatbot</h1>
+</div>
 
-    <div id="chatBox" class="chat-box"></div>
+</div>
 
-    <input id="userInput" placeholder="Ask anything about cars...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
+<!-- EMI -->
+<div id="calc" class="page">
 
-  <!-- ACR -->
-  <div id="acr" class="page">
-    <h1>📊 Annual Car Running Cost (ACR)</h1>
+<h1>💰 EMI Calculator</h1>
 
-    <input id="fuel" placeholder="Monthly Fuel Cost">
-    <input id="service" placeholder="Yearly Service Cost">
-    <input id="insurance" placeholder="Yearly Insurance">
-    <input id="other" placeholder="Other Costs">
+<input id="salary" placeholder="Monthly Salary">
 
-    <button onclick="calcACR()">Calculate</button>
+<input id="expenses" placeholder="Monthly Expenses">
 
-    <div id="acrResult"></div>
-  </div>
+<input id="carPrice" placeholder="Car Price">
 
-  <!-- MAINTENANCE -->
-  <div id="maintain" class="page">
-    <h1>🔧 Maintenance Cost</h1>
+<input id="rate" placeholder="Interest Rate (%)">
 
-    <input id="tyre" placeholder="Tyre Cost/year">
-    <input id="oil" placeholder="Oil + Service/year">
-    <input id="repair" placeholder="Repair/year">
+<input id="years" placeholder="Loan Years">
 
-    <button onclick="calcMaintenance()">Calculate</button>
+<button onclick="calculate()">Calculate</button>
 
-    <div id="maintResult"></div>
-  </div>
+<div id="result"></div>
 
-  <!-- PAYMENT -->
-  <div id="payment" class="page">
-    <h1>💳 Payment System</h1>
+</div>
 
-    <input id="carPrice2" placeholder="Car Price">
-    <input id="ownFund" placeholder="Own %">
-    <input id="loanFund" placeholder="Loan %">
+<!-- AI Recommendation -->
+<div id="ai" class="page">
 
-    <select id="paymentMode">
-      <option>Cash</option>
-      <option>Loan (EMI)</option>
-      <option>Credit Card EMI</option>
-    </select>
+<h1>🤖 AI Car Recommendation</h1>
 
-    <button onclick="calcPayment()">Check</button>
+<div id="aiResult"></div>
 
-    <div id="payResult"></div>
-  </div>
+</div>
 
-  <!-- RTO -->
-  <div id="rto" class="page">
-    <h1>🏛️ RTO Calculator (India)</h1>
+<!-- Chatbot -->
+<div id="chat" class="page">
 
-    <input id="carPrice3" placeholder="Car Price">
+<h1>💬 Car Finance AI Chatbot</h1>
 
-    <select id="state">
-      <option value="tn">Tamil Nadu</option>
-      <option value="ka">Karnataka</option>
-      <option value="mh">Maharashtra</option>
-      <option value="dl">Delhi</option>
-      <option value="up">Uttar Pradesh</option>
-      <option value="gj">Gujarat</option>
-    </select>
+<div id="chatBox" class="chat-box"></div>
 
-    <button onclick="calcRTO()">Calculate</button>
+<input id="userInput"
+placeholder="Can I afford a ₹12 lakh SUV with ₹60k salary?">
 
-    <div id="rtoResult"></div>
-  </div>
+<button onclick="sendMessage()">Send</button>
+
+</div>
+
+<!-- ACR -->
+<div id="acr" class="page">
+
+<h1>📊 Annual Running Cost (ACR)</h1>
+
+<input id="fuel" placeholder="Monthly Fuel Cost">
+
+<input id="service" placeholder="Yearly Service Cost">
+
+<input id="insurance" placeholder="Insurance Cost">
+
+<input id="other" placeholder="Other Annual Costs">
+
+<button onclick="calcACR()">Calculate ACR</button>
+
+<div id="acrResult"></div>
+
+</div>
+
+<!-- Maintenance -->
+<div id="maintain" class="page">
+
+<h1>🔧 Maintenance Cost</h1>
+
+<input id="tyre" placeholder="Tyre Cost">
+
+<input id="oil" placeholder="Oil + Service Cost">
+
+<input id="repair" placeholder="Repair Cost">
+
+<button onclick="calcMaintenance()">
+
+Calculate Maintenance
+
+</button>
+
+<div id="maintResult"></div>
+
+</div>
+
+<!-- Payment -->
+<div id="payment" class="page">
+
+<h1>💳 Payment Planner</h1>
+
+<input id="carPrice2" placeholder="Vehicle Price">
+
+<input id="ownFund" placeholder="Own Contribution (%)">
+
+<input id="loanFund" placeholder="Loan Percentage (%)">
+
+<select id="paymentMode">
+
+<option>Cash</option>
+
+<option>Loan (EMI)</option>
+
+<option>Credit Card EMI</option>
+
+</select>
+
+<button onclick="calcPayment()">
+
+Calculate Payment
+
+</button>
+
+<div id="payResult"></div>
+
+</div>
+
+<!-- RTO -->
+<div id="rto" class="page">
+
+<h1>🏛️ RTO & On-Road Calculator</h1>
+
+<input id="carPrice3" placeholder="Ex Showroom Price">
+
+<select id="state">
+
+<option value="ap">Andhra Pradesh</option>
+<option value="ar">Arunachal Pradesh</option>
+<option value="as">Assam</option>
+<option value="br">Bihar</option>
+<option value="cg">Chhattisgarh</option>
+<option value="ga">Goa</option>
+<option value="gj">Gujarat</option>
+<option value="hr">Haryana</option>
+<option value="hp">Himachal Pradesh</option>
+<option value="jh">Jharkhand</option>
+<option value="ka">Karnataka</option>
+<option value="kl">Kerala</option>
+<option value="mp">Madhya Pradesh</option>
+<option value="mh">Maharashtra</option>
+<option value="mn">Manipur</option>
+<option value="ml">Meghalaya</option>
+<option value="mz">Mizoram</option>
+<option value="nl">Nagaland</option>
+<option value="or">Odisha</option>
+<option value="pb">Punjab</option>
+<option value="rj">Rajasthan</option>
+<option value="sk">Sikkim</option>
+<option value="tn">Tamil Nadu</option>
+<option value="tg">Telangana</option>
+<option value="tr">Tripura</option>
+<option value="up">Uttar Pradesh</option>
+<option value="uk">Uttarakhand</option>
+<option value="wb">West Bengal</option>
+
+<option value="an">Andaman & Nicobar</option>
+<option value="ch">Chandigarh</option>
+<option value="dh">Dadra Nagar Haveli & Daman Diu</option>
+<option value="dl">Delhi</option>
+<option value="jk">Jammu & Kashmir</option>
+<option value="la">Ladakh</option>
+<option value="ld">Lakshadweep</option>
+<option value="py">Puducherry</option>
+
+</select>
+
+<select id="vehicleType">
+<option value="petrol">Petrol</option>
+<option value="diesel">Diesel</option>
+<option value="ev">Electric Vehicle</option>
+<option value="hybrid">Hybrid</option>
+<option value="cng">CNG</option>
+</select>
+
+<select id="registrationType">
+<option value="private">Private</option>
+<option value="commercial">Commercial</option>
+<option value="bh">BH Series</option>
+</select>
+
+<select id="fancyNumber">
+<option value="0">Normal Number</option>
+<option value="25000">VIP Number</option>
+<option value="50000">Premium Number</option>
+<option value="100000">Elite Number</option>
+</select>
+
+<select id="insuranceType">
+<option value="0.03">Third Party</option>
+<option value="0.05">Comprehensive</option>
+<option value="0.07">Zero Dep</option>
+</select>
+
+<select id="fastag">
+<option value="0">No FASTag</option>
+<option value="500">FASTag Included</option>
+</select>
+
+<button onclick="calcRTO()">
+
+Calculate On-Road Price
+
+</button>
+
+<div id="rtoResult"></div>
+
+</div>
+
+<!-- Ownership -->
+<div id="ownership" class="page">
+
+<h1>📈 Ownership Cost</h1>
+
+<input id="vehiclePrice"
+placeholder="Vehicle Price">
+
+<input id="annualRunning"
+placeholder="Annual Running Cost">
+
+<input id="maintenanceCost"
+placeholder="Annual Maintenance">
+
+<button onclick="ownershipCost()">
+
+Calculate
+
+</button>
+
+<div id="ownershipResult"></div>
+
+</div>
+
+<!-- EV Comparison -->
+<div id="evcompare" class="page">
+
+<h1>⚡ EV vs Petrol Comparison</h1>
+
+<input id="petrolMonthly"
+placeholder="Monthly Petrol Cost">
+
+<input id="evMonthly"
+placeholder="Monthly Charging Cost">
+
+<button onclick="compareEV()">
+
+Compare
+
+</button>
+
+<div id="evResult"></div>
+
+</div>
 
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
